@@ -1,7 +1,4 @@
-from math import sqrt
-
-
-'''ok for low numbers, sucks for anything higher
+'''simple exponentation, accurate to about 6 decimal places
 '''
 def pow(mantissa, exponent, precision=0.00000000001):
     if exponent < 0:
@@ -16,24 +13,21 @@ def pow(mantissa, exponent, precision=0.00000000001):
     else:
         return sqrt(pow(mantissa, exponent*2, precision*2))
 
+def sqrt(mantissa, precision=35000):
+    approximation = precision*10
+    for i in range(0, precision):
+        approximation = 0.5*(approximation + (mantissa/approximation))
+    return approximation
+
+###
+
 '''exponentation by squaring
 '''
 def integer_pow(x,n):
-    if n==0:
-        return 1
-    elif n==1:
-        return x
-    elif n % 2: #odd case
-        return x * integer_pow(x*x, (n-1)/2)
-    else:
-        return integer_pow(x*x, n/2)
-
-'''approximation using taylor series
-'''
-def ln(x, precision=100):
-    if precision >=1:
-        return integer_pow((x-1)/x, precision)/precision+ln(x, precision-1)
-    return 0
+    total = 1
+    for i in range(0,n):
+        total*=x
+    return total
 
 '''simple iterative version of factorial
 '''
@@ -45,19 +39,24 @@ def fact(num):
 
 '''approximation using taylor series
 '''
-def exp(x, precision=100):
+def ln(x, precision=170):
+    if precision >=1:
+        return integer_pow((x-1)/x, precision)/precision+ln(x, precision-1)
+    return 0
+
+
+'''approximation using taylor series
+'''
+def exp(x, precision=170):
     if precision >=1:
         return integer_pow(x, precision)/fact(precision)+exp(x, precision-1)
     else:
         return 1
 
 
-def sqrt(mantissa):
-    return pow_by_identity(mantissa, 0.5)
-
-
-'''uses identity x^n = e^(n ln x)
-    much more precise than first pow
+'''uses identity x^n = e^(n ln x). Accuracy largely depends on implementation of exp and ln - in my case they are implemented through Taylor series.
+accurate to ~ 2 decimal places
+    
 '''
 def pow_by_identity(mantissa, exponent):
     return exp(exponent*ln(mantissa))

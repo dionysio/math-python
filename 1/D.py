@@ -3,13 +3,7 @@ __author__ = 'diony_000'
 from PIL import Image
 from functools import partial
 
-def gcd_mod_recursive(a, b, counter=0):
-    if b == 0:
-        return (a, counter)
-    else:
-        return gcd_mod(b, a%b, counter+1)
-
-def gcd_mod_iterative(a,b):
+def gcd_mod(a,b):
     counter = 0
     while b != 0:
         counter += 1
@@ -26,22 +20,21 @@ def gcd_substract(a, b):
            b = b - a
     return (a, counter)
 
-def get_color1(number, maximum):
+def get_color(number, maximum):
     return (0, 255-int(number/maximum * 255), 255)
 
-def get_color2(number):
-    return (255, number % 255, 0)
-
-def save_gcd(func, color_func):
+def save_gcd(func, is_steps=1, result_factor=1, result_maximum=10):
     dimension = 480
     image = Image.new("RGB", (dimension, dimension), (255, 255, 255))
     for i in range(1,dimension):
         for j in range(1, dimension):
-            steps = func(i,j)[1]
-            image.putpixel((i,j), color_func(steps))
+            result = func(i,j)[is_steps]
+            image.putpixel((i,j), get_color(result*result_factor, maximum=result_maximum))
     image = image.rotate(90)
-    image.save("gcd_%s.png" % str(steps))
+    image.save("gcd_%s.png" % str(result))
 
 
-save_gcd(gcd_substract, get_color2)
-save_gcd(gcd_mod_iterative, partial(get_color1, maximum=13))
+save_gcd(gcd_substract, is_steps=0, result_factor=5, result_maximum=480)
+
+save_gcd(gcd_substract, result_factor=5, result_maximum=958)
+save_gcd(gcd_mod, result_maximum=13)

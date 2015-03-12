@@ -3,11 +3,10 @@ from random import random
 
 precision=3500000
 
-
-'''Archimedes got 7 decimal places right, Leibniz only 6, Monte Carlo is all over the place with the precision, mostly it got 2-3 places right (might also have something to do with implementation). Archimedes is also much faster than the other two
+'''Archimedes got 7 decimal places right, Leibniz only 6, Monte Carlo is all over the place with the precision, mostly it got 2-3 places right. Archimedes is also much faster than the other two
 '''
 
-'''3.1415929393040165
+'''approximation> 3.1415929393040165
 '''
 def leibniz():
     total = 0
@@ -18,8 +17,7 @@ def leibniz():
             total -= 1/(i*2-1)
     print(total*4)
 
-'''
-3.141592692092259
+'''approximation> 3.141592692092259
 but much much faster than monte_carlo
 '''
 def archimedes():   
@@ -29,8 +27,7 @@ def archimedes():
         x,y = (2*x*y/(x+y), sqrt(2*x*y*y/(x+y)))
     print((x+y)/2)
 
-
-'''
+'''approximations> 
 3.1430009302325583
 3.141973953488372
 3.141832558139535
@@ -43,10 +40,9 @@ def archimedes():
 3.141248372093023
 '''
 def monte_carlo():
-    count_inside = 0
-    for count in range(0, precision):
-        d = hypot(random(), random())
+    counter = 0
+    for i in range(0, precision):
+        d = hypot(random(), random()) #returns the Euclidean norm, sqrt(x*x + y*y)
         if d < 1: 
-            count_inside += 1
-    count += 1
-    print( 4.0 * count_inside / count)
+            counter += 1
+    print( 4.0 * counter / (precision+1))

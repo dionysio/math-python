@@ -8,7 +8,7 @@ def get_color(value, minimum, maximum, hsv_constant=120):
     return (int(r*255), int(g*255), int(b*255))
 
 def pascal_triangle(no_of_rows, modulo):
-    image = Image.new('RGB', size=(no_of_rows*2, no_of_rows*2))
+    image = Image.new('RGB', size=(no_of_rows*2, no_of_rows), color=(255,255,255))
     for count in range(no_of_rows):
         last_x = -count
         for element in range(count + 1): 
@@ -20,5 +20,6 @@ def pascal_triangle(no_of_rows, modulo):
             color = get_color(item, 0, modulo-1)
             image.putpixel((last_x, count), color)
             image.putpixel((last_x+1, count), color)
-    image.save('pascal.png')
-            
+    image.save('pascal%d%d.png' % (no_of_rows,modulo))
+
+pascal_triangle(45, 5)

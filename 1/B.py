@@ -2,6 +2,7 @@
 __author__ = 'diony_000'
 
 import matplotlib.pyplot as plt
+from functools import partial
 
 def collatz(num, modified_version=False):
     sequence = []
@@ -45,32 +46,47 @@ def inverse_sum(lst):
 def collatz_harmonic(upper_bound, modified_version=False):
     return collatz_loop(upper_bound, len, inverse_sum, modified_version)
 
+my_plot = partial(plt.plot, marker='o', color='red', markersize=2, ls=' ') #plot with red circles representing individual points
+upper_bound = 8000 #basically how many iterations to do
 
-maximums = collatz_maximum(5000)
-plt.plot(range(1, len(maximums)+1), maximums, 'ro', markersize=2)
+###
+
+func=collatz_maximum
+maximums = func(upper_bound)
+my_plot(range(1, len(maximums)+1), maximums)
 plt.ylim(0, 10000)
+plt.title('collatz_max')
 plt.savefig('collatz_max.svg')
 plt.clf()
 
-maximums = collatz_maximum(5000, modified_version=True)
-plt.plot(range(1, len(maximums)+1), maximums, 'ro', markersize=2)
+maximums = func(upper_bound, modified_version=True)
+my_plot(range(1, len(maximums)+1), maximums)
 plt.ylim(0, 10000)
+plt.title('collatz_max_modified')
 plt.savefig('collatz_max_modified.svg')
 plt.clf()
 
-avg = collatz_harmonic(8000)
+###
+
+func=collatz_harmonic
+avg = func(upper_bound)
 plt.ylim(0, 100)
-plt.plot(range(1, len(avg)+1), avg, 'ro', markersize=2)
+my_plot(range(1, len(avg)+1), avg)
+plt.title('collatz_harmonic')
 plt.savefig('collatz_harmonic.svg')
 plt.clf()
 
-avg = collatz_harmonic(8000, modified_version=True)
+avg = func(upper_bound, modified_version=True)
 plt.ylim(0, 100)
-plt.plot(range(1, len(avg)+1), avg, 'ro', markersize=2)
+my_plot(range(1, len(avg)+1), avg)
+plt.title('collatz_harmonic_modified')
 plt.savefig('collatz_harmonic_modified.svg')
 plt.clf()
 
-steps = collatz_steps(100)
-plt.plot(range(1, len(steps)+1), steps, 'ro', markersize=2)
+###
+
+steps = collatz_steps(upper_bound)
+my_plot(range(1, len(steps)+1), steps)
+plt.title('collatz_steps')
 plt.savefig('collatz_steps.svg')
 plt.clf()

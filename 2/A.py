@@ -1,30 +1,39 @@
-from copy import copy
-from itertools import repeat, chain
+def combinations_with_repetition(head, choose_k):        
+    return combinations(head, choose_k, repetitions=True)
 
-def permutations(data):
-    variations(data, n = len(data)+1)
+def combinations(head, choose_k, repetitions=False):
+    combos = []
+    if not choose_k: #base case
+        return [()]
+    for i in range(len(head)):
+        if repetitions: 
+            tails = combinations(head[i:], choose_k-1, repetitions) #includes current element and every element after
+        else:      
+            tails = combinations(head[i+1:], choose_k-1, repetitions) #includes elements after current
+        for tail in tails:
+            combos.append((head[i],)+tail)
+    return combos
 
+###
 
-def variations(data, target='', n=None):
-    global variats
-    if n is None:
-        n = len(data)+1
-    for i in range(len(data)):
-        new_target = target+data[i]
-        if len(new_target) <= n:
-            #if len(new_target)+1 == n:
-            variats.add(new_target)
-            variations(data[i+1:],new_target, n)
+def permutations(head):
+    return variations(head, len(head))
 
+def permutations_with_repetition(head):
+    return variations(head, len(head), repetitions=True)
 
-def variations_with_repetition(data, n):
-    data = ''.join(chain.from_iterable(repeat(data, n)))
-    variations(data, n=n)
+def variations_with_repetition(head, choose_k):        
+    return combinations(head, choose_k, repetitions=True)
 
-
-data = 'abcda'
-variats = set() #global variable for different combinations
-permutations(data)
-print(variats)
-#variats.clear()
-#variations(data)
+def variations(head, choose_k, repetitions=False):
+    variats = []
+    if not choose_k: #base case
+        return [()]
+    for i in range(len(head)):
+        if repetitions: 
+            tails = variations(head, choose_k-1, repetitions)
+        else:      
+            tails = variations(head[:i]+head[i+1:], choose_k-1, repetitions)
+        for tail in tails:
+            variats.append((head[i],)+tail)
+    return variats

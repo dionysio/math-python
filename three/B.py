@@ -1,4 +1,4 @@
-from A import Turtle, draw_star, draw_polygon
+from three.A import Turtle, draw_star, draw_polygon
 from math import sin, radians, atan, degrees, sqrt, cos, sin
 from functools import partial
 import svgwrite
@@ -84,11 +84,10 @@ def draw_object(draw_func, length=length, start_x=65, start_y=65):
     draw_func(turtle=turtle)
     turtle.save_image()
 
-'''
-draw_object(draw_func=recursive_triangles, start_x=5, start_y=5)
-draw_object(draw_func=flower_polygon, start_x=0, start_y=0)
-draw_object(draw_func=inscribed_polygram_rel, start_x=5, start_y=40)
-draw_object(draw_func=inscribed_polygram_abs)
-draw_object(draw_func=recursive_squares, start_x=5, start_y=5)
-'''
-draw_object(draw_func=circle_grid, start_x=10, start_y=10)
+if __name__ == "__main__":
+    draw_object(draw_func=recursive_triangles, start_x=5, start_y=5)
+    draw_object(draw_func=flower_polygon, start_x=0, start_y=0)
+    draw_object(draw_func=inscribed_polygram_rel, start_x=5, start_y=40)
+    draw_object(draw_func=inscribed_polygram_abs)
+    draw_object(draw_func=recursive_squares, start_x=5, start_y=5)
+    draw_object(draw_func=circle_grid, start_x=10, start_y=10)

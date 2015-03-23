@@ -11,7 +11,7 @@ class Turtle():
         self.angle = 0.0
         self.draw = True
         self.image = svgwrite.Drawing(filename, viewBox= "%s, %s, %s, %s" % (0, 0, length*1.5, length*1.5), preserveAspectRatio="xMinYMin meet") #self.x-length*0.5, self.y-length*0.5
-        self.line = partial(svgwrite.shapes.Line, stroke='black') #stroke_width=length/350
+        self.line = partial(svgwrite.shapes.Line, stroke='black', stroke_width=length/350)
 
     def penup(self):
         self.draw = False
@@ -60,10 +60,11 @@ def draw_star(turtle, number_of_vertices=9, length=length):
         turtle.forward(length)
         turtle.right(angle)
 
-turtle = Turtle('star.svg', 0,45)
-draw_star(turtle)
-turtle.save_image()
-
-turtle = Turtle('polygon.svg', 30,90)
-draw_polygon(turtle)
-turtle.save_image()
+if __name__ == "__main__":
+    turtle = Turtle('star.svg', 0,45)
+    draw_star(turtle)
+    turtle.save_image()
+    
+    turtle = Turtle('polygon.svg', 30,90)
+    draw_polygon(turtle)
+    turtle.save_image()
